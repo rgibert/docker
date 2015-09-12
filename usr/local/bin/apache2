@@ -1,17 +1,22 @@
 #!/bin/bash
+set -e
 
-if [[ -z ${HTTP_ENABLE} ]] && [[ -z ${HTTPS_ENABLE} ]]; then
-    echo "HTTP & HTTPS not enabled, no starting httpd"
-    exit 0
-else 
-    if [[ -z ${HTTP_ENABLE} ]]; then
-        a2dissite http
+if [[ "${1}" == 'apache2' ]]; then
+    if [[ -z ${HTTP_ENABLE} ]] && [[ -z ${HTTPS_ENABLE} ]]; then
+        echo "HTTP & HTTPS not enabled, no starting httpd"
+        exit 0
+    else 
+        if [[ -z ${HTTP_ENABLE} ]]; then
+            a2dissite http
+        fi
+        
+        if [[ -z ${HTTPS_ENABLE} ]]; then
+            a2dissite https
+        fi
+        
+        exec /usr/sbin/apache2ctl -DFOREGROUND
     fi
-    
-    if [[ -z ${HTTPS_ENABLE} ]]; then
-        a2dissite https
-    fi
-    
-    /usr/sbin/apache2ctl -DFOREGROUND
 fi
+
+exec "$@"
 

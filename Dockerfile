@@ -12,3 +12,4 @@ RUN a2ensite http && \
     a2ensite https
 EXPOSE 80 443
 ENTRYPOINT [ "/usr/local/bin/apache2" ]
+CMD [ "apache2" ]
