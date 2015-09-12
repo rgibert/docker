@@ -11,5 +11,7 @@ COPY usr /usr/
 RUN a2ensite http && \
     a2ensite https
 EXPOSE 80 443
+VOLUME /var/log/apache2
+VOLUME /etc/apache2/certs
 ENTRYPOINT [ "/usr/local/bin/apache2" ]
 CMD [ "apache2" ]
