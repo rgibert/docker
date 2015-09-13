@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PORT_MAP_OFFSET=0
+PORT_MAP_OFFSET=10000
 ENABLE_HTTPS=0
 ENABLE_HTTP=0
 
@@ -27,11 +27,16 @@ if [[ ${ENABLE_HTTP} -eq 0 ]] && [[ ${ENABLE_HTTPS} -eq 0 ]]; then
 fi
 
 if [[ ${ENABLE_HTTP} -eq 1 ]]; then
-    PORTS_ENABLED="-p ${PORT_MAP_HTTP}:80 "
+    PORTS_ENABLED="-e 'HTTP_ENABLE=1' -p ${PORT_MAP_HTTP}:80 "
 fi
 
 if [[ ${ENABLE_HTTPS} -eq 1 ]]; then
-    PORTS_ENABLED="${PORTS_ENABLED} -p ${PORT_MAP_HTTPS}:443"
+    PORTS_ENABLED="${PORTS_ENABLED} -e 'HTTPS_ENABLE=1' -p ${PORT_MAP_HTTPS}:443"
 fi
 
-docker run -d ${PORTS_ENABLED} -v ~/dev/docker/apache-httpd/run_test/certs:/etc/apache2/certs:ro -v ~/dev/docker/apache-httpd/run_test/logs:/var/log/apache2 --name=apache-httpd-`date +%Y%m%d%H%M%S` rgibert/apache-httpd:2.4-0 /usr/sbin/apache2ctl -DFOREGROUND
+RUN_HOME="${HOME}/dev/docker/apache-httpd/run_test"
+
+mkdir -p ${RUN_HOME}/logs ${RUN_HOME}/certs ${RUN_HOME}/html
+
+docker run -t -d ${PORTS_ENABLED} -v ${RUN_HOME}/logs:/var/log/apache2 --name=apache-httpd-`date +%Y%m%d%H%M%S` rgibert/apache-httpd:latest
+

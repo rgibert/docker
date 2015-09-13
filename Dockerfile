@@ -13,5 +13,6 @@ RUN a2ensite http && \
 EXPOSE 80 443
 VOLUME /var/log/apache2
 VOLUME /etc/apache2/certs
+VOLUME /var/www/html
 ENTRYPOINT [ "/usr/local/bin/apache2" ]
 CMD [ "apache2" ]
