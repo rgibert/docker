@@ -2,7 +2,7 @@
 set -e
 
 if [[ "${1}" == 'apache2' ]]; then
-    if [[ -z ${HTTP_ENABLE} ]] && [[ -z ${HTTPS_ENABLE} ]]; then
+    if [[ -z ${HTTP_ENABLE} -a -z ${HTTPS_ENABLE} ]]; then
         echo "HTTP & HTTPS not enabled, not starting httpd"
         exit 0
     else 

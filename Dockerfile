@@ -15,6 +15,6 @@ RUN a2ensite http && \
     a2ensite https
 EXPOSE 80 443
 VOLUME /var/log/apache2 /var/www/html
-ENTRYPOINT [ "/usr/local/bin/apache2" ]
+ENTRYPOINT [ "/usr/local/bin/entrypoint" ]
 CMD [ "apache2" ]
 
