@@ -1,0 +1,5 @@
+LoadModule mime_magic_module modules/mod_mime_magic.so
+
+<IfModule mod_mime_magic.c>
+    MIMEMagicFile /etc/apache2/magic
+</IfModule>

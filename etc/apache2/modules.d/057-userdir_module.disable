@@ -1,0 +1,5 @@
+LoadModule userdir_module modules/mod_userdir.so
+
+<IfModule mod_userdir.c>
+    UserDir disabled
+</IfModule>

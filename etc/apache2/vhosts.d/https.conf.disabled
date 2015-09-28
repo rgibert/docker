@@ -1,14 +1,15 @@
 <IfModule mod_ssl.c>
 
+Listen 443
 <VirtualHost *:443>
     SSLEngine on
     SSLProtocol all -SSLv2 -SSLv3
     SSLHonorCipherOrder on
     SSLCipherSuite ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS:!RC4
     SSLCompression Off
-    SSLCertificateFile certs/cert.pem
-    SSLCertificateKeyFile certs/key.key
-    SSLCertificateChainFile certs/chain.pem
+    SSLCertificateFile ssl/cert.pem
+    SSLCertificateKeyFile ssl/key.key
+    SSLCertificateChainFile ssl/chain.pem
     
     BrowserMatch "MSIE [2-6]" \
         nokeepalive ssl-unclean-shutdown \
@@ -16,7 +17,7 @@
     # MSIE 7 and newer should be able to use keepalive
     BrowserMatch "MSIE [17-9]" ssl-unclean-shutdown 
     
-    Include sites-available/common.include
+    Include vhosts.d/common.include
 </VirtualHost>
 
 </IfModule>

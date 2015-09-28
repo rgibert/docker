@@ -1,8 +1,3 @@
-DocumentRoot /var/www/html
-LogLevel error
-ErrorLog "|/usr/bin/rotatelogs /var/log/apache2/error.%Y%m%d.log 86400"
-CustomLog "|/usr/bin/rotatelogs /var/log/apache2/access.%Y%m%d.log 86400" combined
-
 <IfModule mod_php5.c>
     AddType application/x-httpd-php .php
     php_admin_flag magic_quotes_gpc Off
@@ -14,7 +9,7 @@ CustomLog "|/usr/bin/rotatelogs /var/log/apache2/access.%Y%m%d.log 86400" combin
     php_flag ignore_repeated_errors Off
     php_value error_reporting "E_ALL & ~E_NOTICE"
     php_admin_value expose_php 0
-    php_admin_value error_log "|/usr/bin/rotatelogs /var/log/apache2/php.%Y%m%d.log 86400"
+    php_admin_value error_log "|/usr/bin/rotatelogs /var/www/logs/php.%Y%m%d.log 86400"
 </IfModule>
 
 # Fix missing favicon logging
@@ -29,10 +24,4 @@ Redirect permanent 404 /favicon.ico
     Order allow,deny
     allow from all
 </Directory>
-
-<IfModule headers_module>
-    Header set X-Clacks-Overhead "GNU Terry Pratchett"
-    Header always set X-Frame-Options DENY
-    Header always set X-Content-Type-Options nosniff
-</IfModule>
 

@@ -1,0 +1,10 @@
+LoadModule mpm_worker_module modules/mod_mpm_worker.so
+
+<IfModule worker.c>
+    StartServers 4
+    MaxClients 300
+    MinSpareThreads 25
+    MaxSpareThreads 75 
+    ThreadsPerChild 25
+    MaxRequestsPerChild 0
+</IfModule>

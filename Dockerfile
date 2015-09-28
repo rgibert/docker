@@ -1,20 +1,19 @@
-FROM ubuntu:trusty
+FROM gliderlabs/alpine
 MAINTAINER Richard Gibert <richard@gibert.ca>
-RUN export DEBIAN_FRONTEND=noninteractive && \
-    apt-get update && \
-    apt-get install --no-install-recommends -y \
+RUN apk-install \
         apache2 \
+        apache2-ssl \
         apache2-utils \
         && \
-    unset DEBIAN_FRONTEND && \
-    rm -r /var/lib/apt/lists/* /etc/apache2/sites-*/* && \
-    a2enmod ssl
-COPY etc /etc/
-COPY usr /usr/
-RUN a2ensite http && \
-    a2ensite https
+    ln -s /etc/apache2/vhosts.d /var/www/vhosts.d && \
+    ln -s /etc/apache2/modules.d /var/www/modules.d && \
+    ln -s /etc/apache2/ssl /var/www/ssl && \
+    rm -rf /var/www/localhost /etc/apache2/original /etc/apache2/conf.d /var/www/conf.d && \
+    mkdir -p /var/www/htdocs
+COPY etc/ /etc/
+COPY usr/local/bin/entrypoint /usr/local/bin/entrypoint
 EXPOSE 80 443
-VOLUME /var/log/apache2 /var/www/html
+VOLUME /var/www/logs
 ENTRYPOINT [ "/usr/local/bin/entrypoint" ]
 CMD [ "apache2" ]
 
