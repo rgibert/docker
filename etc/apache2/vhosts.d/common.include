@@ -9,7 +9,7 @@
     php_flag ignore_repeated_errors Off
     php_value error_reporting "E_ALL & ~E_NOTICE"
     php_admin_value expose_php 0
-    php_admin_value error_log "|/usr/bin/rotatelogs /var/www/logs/php.%Y%m%d.log 86400"
+    php_admin_value error_log "|/usr/sbin/rotatelogs /var/www/logs/php.%Y%m%d.log 86400"
 </IfModule>
 
 # Fix missing favicon logging

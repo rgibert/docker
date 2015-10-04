@@ -4,6 +4,7 @@ RUN apk-install \
         apache2 \
         apache2-ssl \
         apache2-utils \
+        bash \
         && \
     ln -s /etc/apache2/vhosts.d /var/www/vhosts.d && \
     ln -s /etc/apache2/modules.d /var/www/modules.d && \

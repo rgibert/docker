@@ -2,19 +2,19 @@
 set -e
 
 if [[ "${1}" == 'apache2' ]]; then
-    if [[ -z ${HTTP_ENABLE} -a -z ${HTTPS_ENABLE} ]]; then
+    if [[ -z ${HTTP_ENABLE} && -z ${HTTPS_ENABLE} ]]; then
         echo "HTTP & HTTPS not enabled, not starting httpd"
         exit 0
     else 
-        if [[ -z ${HTTP_ENABLE} ]]; then
-            a2dissite http
+        if [[ -n ${HTTP_ENABLE} ]]; then
+            mv /etc/apache2/vhosts.d/http.conf.disabled /etc/apache2/vhosts.d/http.conf
         fi
         
-        if [[ -z ${HTTPS_ENABLE} ]]; then
-            a2dissite https
+        if [[ -n ${HTTPS_ENABLE} ]]; then
+            mv /etc/apache2/vhosts.d/https.conf.disabled /etc/apache2/vhosts.d/https.conf
         fi
         
-        exec /usr/sbin/apache2ctl -DFOREGROUND
+        exec /usr/sbin/apachectl -DFOREGROUND
     fi
 fi
 
